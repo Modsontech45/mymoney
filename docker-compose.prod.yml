@@ -1,0 +1,21 @@
+services:
+  app:
+    build:
+      context: .
+      target: prod
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env.production
+    environment:
+      - NODE_ENV=production
+    networks:
+      - FRA
+    depends_on:
+      - redis
+
+  redis:
+    ports:
+      - "6389:6379"
+    env_file:
+      - .env.production

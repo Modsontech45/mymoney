@@ -1,0 +1,32 @@
+services:
+  app:
+    build: .
+    volumes:
+      - ./uploads:/app/uploads
+    restart: unless-stopped
+    networks:
+      - FRA
+
+  redis:
+    image: redis:8-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - FRA
+
+  # Optional: Redis monitoring
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    depends_on:
+      - redis
+    networks:
+      - FRA
+
+networks:
+  FRA:
+    driver: bridge
+
+volumes:
+  redis_data:

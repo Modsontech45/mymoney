@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      target: dev
+    ports:
+      - '5000:3000'
+    env_file:
+      - .env.local
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:17-alpine
+    ports:
+      - '5433:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    env_file:
+      - .env.local
+
+  redis:
+    ports:
+      - '6399:6379'
+    env_file:
+      - .env.local
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - '5055:80'
+    env_file:
+      - .env.local
+    depends_on:
+      - db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  db_data:
+  pgadmin_data:
