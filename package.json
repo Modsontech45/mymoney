@@ -1,7 +1,7 @@
 {
   "name": "finance_backend",
   "version": "0.0.1",
-  "description": "",
+  "description": "Finance backend API",
   "main": "src/server.ts",
   "scripts": {
     "dev": "nodemon src/server.ts",
@@ -24,10 +24,16 @@
     "db:migrate:revert": "npm run typeorm -- migration:revert -d src/config/database.config.ts",
     "db:generate": "npm run typeorm -- migration:generate -d src/config/database.config.ts"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "finance",
+    "backend",
+    "api",
+    "typescript",
+    "nodejs"
+  ],
+  "author": "Modson Tande",
   "license": "ISC",
-  "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b",
+  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a",
   "dependencies": {
     "@bull-board/api": "^6.12.0",
     "@bull-board/express": "^6.12.0",
@@ -64,7 +70,7 @@
     "@types/morgan": "^1.9.10",
     "@types/multer": "^2.0.0",
     "@types/node": "^24.1.0",
-    "@types/nodemailer": "^6.4.17",
+    "@types/nodemailer": "^7.0.2",
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.16",
     "@types/passport-jwt": "^4.0.1",
