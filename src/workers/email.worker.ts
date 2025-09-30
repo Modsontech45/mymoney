@@ -1,6 +1,6 @@
 import { Job, Worker } from 'bullmq';
 import { redisConfig } from '../config/redis.config';
-import { sendEmail } from '../services/email.service';
+import { transporter } from '../services/email.service';
 import { EmailJobData } from '../types';
 
 // Email worker
@@ -10,8 +10,14 @@ export const emailWorker = new Worker(
     const { to, html, subject, text } = job.data;
 
     try {
-      await sendEmail(to, subject, html || text);
-    } catch (error: any) {
+      await transporter.sendMail({
+        from: `"${process.env.EMAIL_NAME}" <${process.env.EMAIL_FROM}>`,
+        to,
+        html,
+        subject,
+        text,
+      });
+    } catch (error) {
       console.error(`❌ Failed to send email to ${to}:`, error);
       throw error;
     }
@@ -24,15 +30,15 @@ export const emailWorker = new Worker(
 
 // Worker event handlers
 emailWorker.on('completed', (job) => {
-  console.log(`✅ Email job ${job.id} completed successfully`);
+  console.log(`Email job ${job.id} completed successfully`);
 });
 
 emailWorker.on('failed', (job, err) => {
-  console.error(`❌ Email job ${job?.id} failed:`, err.message);
+  console.error(`Email job ${job?.id} failed:`, err.message);
 });
 
 emailWorker.on('error', (err) => {
-  console.error('❌ Email worker error:', err);
+  console.error('Email worker error:', err);
 });
 
 // Graceful shutdown
