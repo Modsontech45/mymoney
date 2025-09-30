@@ -13,9 +13,8 @@ RUN pnpm install --frozen-lockfile;
 # ============= Build stage =============
 FROM deps AS build
 COPY . .
-RUN if [ "$NODE_ENV" = "production" ]; then \
-    pnpm run build; \
-    fi
+RUN pnpm run build
+
 
 # ============= Production image =============
 FROM node:22-alpine AS prod
