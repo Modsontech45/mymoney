@@ -24,7 +24,7 @@ export class TransactionController {
 
       // Validate and parse query parameters
       const queryParams: TransactionQueryParams = {
-        page: parseInt(req.query.page as string) || 4,
+        page: parseInt(req.query.page as string) || 1,
         limit: parseInt(req.query.limit as string) || 1000000,
         startDate: req.query.startDate as string,
         endDate: req.query.endDate as string,
